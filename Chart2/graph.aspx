@@ -7,7 +7,6 @@
     </asp:ScriptManager>
     <asp:Timer ID="Timer1" runat="server" Interval="30000">
     </asp:Timer>    
-    <% Response.Write(query)%>
     <asp:Label ID="pageof" runat="server" Font-Size="X-Large"></asp:Label>
     <asp:MultiView ID="MultiView1" runat="server">
         <asp:View ID="View1" runat="server">                        
