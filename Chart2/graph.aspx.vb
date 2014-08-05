@@ -7,6 +7,7 @@ Partial Class _Default
 
     Private vws As List(Of View)
     Public query As String = ""
+    Private daysAgo As Integer
 
 #Region "Page Lifecycle/Event Handlers"
 
@@ -14,26 +15,40 @@ Partial Class _Default
         Using sr As New System.IO.StreamReader(Server.MapPath("~/workingquery.sql"))
             query = sr.ReadToEnd
         End Using
-        Dim d As Integer = If(CInt(Request("d")) > 0, CInt(Request("d")), 14)
 
-        query &= "BETWEEN DATEADD(day, - " & d & ", GETDATE()) AND GETDATE()) "
+   
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim path As String = Server.MapPath("~/graph.aspx") & "?d=" & TextBox1.Text
-        Response.Redirect(path, True)
+        Dim path As String = "graph.aspx" & "?d=" & TextBox1.Text
+        Response.Redirect(path)
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ScriptManager.GetCurrent(Me).RegisterPostBackControl(TextBox1)
 
+        If CInt(Request("d")) > 0 Then
+            Session("daysago") = Request("d")
+        ElseIf IsNothing(Session("daysago")) Then
+            Session("daysago") = 14
+        End If
+
+
+        'this should be swapped for parameterized query, isn't that right @pajw?
+        'http://xkcd.com/327/
+
+
+        query &= "BETWEEN DATEADD(day, - " & Session("daysago") & ", GETDATE()) AND GETDATE()) "
         SqlDataSource1.SelectCommand = query
         Try
             vws = Views()
             If MultiView1.ActiveViewIndex = -1 Then
                 MultiView1.ActiveViewIndex = 0
                 If Not IsNothing(Grid(vws(MultiView1.ActiveViewIndex))) Then
-                    Grid(vws(MultiView1.ActiveViewIndex)).DataBind()
-                    SetCaption(Grid(vws(MultiView1.ActiveViewIndex)))
+                    If Not Page.IsPostBack() Then
+                        Grid(vws(MultiView1.ActiveViewIndex)).DataBind()
+                        SetCaption(Grid(vws(MultiView1.ActiveViewIndex)))
+                    End If
                 End If
                 If Not IsNothing(Request("p")) Then
                     Try

@@ -1,14 +1,16 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="graph.aspx.vb" Inherits="_Default" Culture="en-gb" UICulture="en-gb"%>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="graph.aspx.vb" Inherits="_Default" Culture="en-gb" UICulture="en-gb" EnableViewState="true"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+        <asp:Label ID="Label1" runat="server" Text="Days Prior: "></asp:Label><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox><asp:Button ID="Button1" runat="server" Text="Filter" />
+   
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
     <asp:Timer ID="Timer1" runat="server" Interval="30000">
     </asp:Timer>   
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox><asp:Button ID="Button1" runat="server" Text="Button" />
-   
+
     <asp:Label ID="pageof" runat="server" Font-Size="X-Large"></asp:Label>
     <asp:MultiView ID="MultiView1" runat="server">
         <asp:View ID="View1" runat="server">                        
