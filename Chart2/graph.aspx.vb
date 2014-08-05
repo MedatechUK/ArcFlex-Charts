@@ -14,15 +14,18 @@ Partial Class _Default
         Using sr As New System.IO.StreamReader(Server.MapPath("~/workingquery.sql"))
             query = sr.ReadToEnd
         End Using
-
-
-    End Sub
-
-
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim d As Integer = If(CInt(Request("d")) > 0, CInt(Request("d")), 14)
 
         query &= "BETWEEN DATEADD(day, - " & d & ", GETDATE()) AND GETDATE()) "
+    End Sub
+
+    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim path As String = Server.MapPath("~/graph.aspx") & "?d=" & TextBox1.Text
+        Response.Redirect(path, True)
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         SqlDataSource1.SelectCommand = query
         Try
             vws = Views()

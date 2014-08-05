@@ -10,8 +10,10 @@
 
 </head>
 <body >
+    
     <form id="form1" runat="server" >
-    <p>
+      <p>
+        
           <%--  <img alt="Arcflex Ltd." src="images/arcflex_logo.jpg" 
                 style="width: 200px; height: 40px" /></p>    <div style="border-width: thick; border-style: ridge; background-color: #FFFFFF; font-family: Verdana">
         --%>
