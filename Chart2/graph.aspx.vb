@@ -7,27 +7,28 @@ Partial Class _Default
 
     Private vws As List(Of View)
     Public query As String = "SELECT        dbo.CUSTOMERS.CUSTDES AS Customer, dbo.ORDERS.ORDNAME AS [Order], dbo.fnFormatDate(dbo.MINTODATE(dbo.ORDERS.CURDATE), 'DD/MM/YY') AS Date, " & _
-                 "dbo.PART.PARTNAME AS [Part Number], dbo.PART.PARTDES AS [Part Description], dbo.fnFormatDate(dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE), 'DD/MM/YY')" & _
-                 "AS [Due Date], dbo.ORDERITEMS.TQUANT / 1000 AS [Ordered Qty], dbo.ORDERITEMS.TBALANCE / 1000 AS Balance, " & _
-                 "dbo.TRANSORDER.TQUANT / 1000 AS [Transaction Quantity], " & _
-                 "CASE WHEN TRANSORDER.TYPE = 'X' THEN INVOICES.IVNUM WHEN TRANSORDER.TYPE = 'V' THEN INVOICES.IVNUM ELSE DOCUMENTS.DOCNO END AS Expr1, " & _
-                 "dbo.fnFormatDate(dbo.MINTODATE(dbo.TRANSORDER.CURDATE), 'DD/MM/YY') AS Expr2, " & _
-                 "CASE WHEN TRANSORDER.CURDATE = 0 THEN '' " & _
-                 "ELSE DATEDIFF(DAY, dbo.MINTODATE(ORDERITEMS.DUEDATE), dbo.MINTODATE(TRANSORDER.CURDATE)) " & _
-                 "END AS [Day Diff]" & _
-                 "FROM            dbo.ORDERS INNER JOIN" & _
-                 "dbo.ORDERITEMS ON dbo.ORDERS.ORD = dbo.ORDERITEMS.ORD INNER JOIN" & _
-                 "dbo.CUSTOMERS ON dbo.CUSTOMERS.CUST = dbo.ORDERS.CUST INNER JOIN" & _
-                 "dbo.PART ON dbo.ORDERITEMS.PART = dbo.PART.PART INNER JOIN" & _
-                 "dbo.PARTPARAM ON dbo.PART.PART = dbo.PARTPARAM.PART INNER JOIN" & _
-                 "dbo.ORDSTATUS ON dbo.ORDERS.ORDSTATUS = dbo.ORDSTATUS.ORDSTATUS RIGHT OUTER JOIN" & _
-                 "dbo.TRANSORDER ON dbo.ORDERITEMS.ORDI = dbo.TRANSORDER.ORDI RIGHT OUTER JOIN" & _
-                 "dbo.DOCUMENTS ON dbo.DOCUMENTS.DOC = dbo.TRANSORDER.DOC AND dbo.TRANSORDER.TYPE = 'X' OR dbo.TRANSORDER.TYPE = 'Y' RIGHT OUTER JOIN" & _
-                 "dbo.INVOICES ON dbo.INVOICES.IV = dbo.TRANSORDER.DOC AND dbo.TRANSORDER.TYPE = 'X' OR dbo.TRANSORDER.TYPE = 'V' RIGHT OUTER JOIN" & _
-                 "dbo.DOCTYPES ON dbo.TRANSORDER.TYPE = dbo.DOCTYPES.TYPE" & _
-                "WHERE        (dbo.PARTPARAM.INVFLAG = 'Y') AND (dbo.ORDSTATUS.MANAGERREPOUT <> 'Y') AND (dbo.ORDERS.FORECASTFLAG <> 'S') AND " & _
-                 "(dbo.ORDERS.FORECASTFLAG <> 'F') AND (dbo.DOCTYPES.OTYPE <> 'P') AND (dbo.TRANSORDER.TYPE NOT IN ('F', 'I', 'J', 'K', 'P', 'W', 'Y', 'L')) AND " & _
-                 "(dbo.ORDERITEMS.ORD <> 0) AND (dbo.DOCUMENTS.TYPE <> 'A') AND (dbo.TRANSORDER.TQUANT <> 0) AND (dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE) "
+                         "dbo.PART.PARTNAME AS [Part Number], dbo.PART.PARTDES AS [Part Description], dbo.fnFormatDate(dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE), 'DD/MM/YY') " & _
+                         "AS [Due Date], dbo.ORDERITEMS.TQUANT / 1000 AS [Ordered Qty], dbo.ORDERITEMS.TBALANCE / 1000 AS Balance, " & _
+                         "dbo.TRANSORDER.TQUANT / 1000 AS [Transaction Quantity], " & _
+                         "CASE WHEN TRANSORDER.TYPE = 'X' THEN INVOICES.IVNUM WHEN TRANSORDER.TYPE = 'V' THEN INVOICES.IVNUM ELSE DOCUMENTS.DOCNO END AS Expr1, " & _
+                         "dbo.fnFormatDate(dbo.MINTODATE(dbo.TRANSORDER.CURDATE), 'DD/MM/YY') AS Expr2, " & _
+                         "CASE WHEN TRANSORDER.CURDATE = 0 THEN '' " & _
+                         "ELSE DATEDIFF(DAY, dbo.MINTODATE(ORDERITEMS.DUEDATE), dbo.MINTODATE(TRANSORDER.CURDATE)) " & _
+                         "END AS [Day Diff]" & _
+"FROM            dbo.ORDERS INNER JOIN" & _
+                         "dbo.ORDERITEMS ON dbo.ORDERS.ORD = dbo.ORDERITEMS.ORD INNER JOIN" & _
+                         "dbo.CUSTOMERS ON dbo.CUSTOMERS.CUST = dbo.ORDERS.CUST INNER JOIN" & _
+                         "dbo.PART ON dbo.ORDERITEMS.PART = dbo.PART.PART INNER JOIN" & _
+                         "dbo.PARTPARAM ON dbo.PART.PART = dbo.PARTPARAM.PART INNER JOIN" & _
+                         "dbo.ORDSTATUS ON dbo.ORDERS.ORDSTATUS = dbo.ORDSTATUS.ORDSTATUS RIGHT OUTER JOIN" & _
+                         "dbo.TRANSORDER ON dbo.ORDERITEMS.ORDI = dbo.TRANSORDER.ORDI RIGHT OUTER JOIN" & _
+                         "dbo.DOCUMENTS ON dbo.DOCUMENTS.DOC = dbo.TRANSORDER.DOC AND dbo.TRANSORDER.TYPE = 'X' OR dbo.TRANSORDER.TYPE = 'Y' RIGHT OUTER JOIN" & _
+                         "dbo.INVOICES ON dbo.INVOICES.IV = dbo.TRANSORDER.DOC AND dbo.TRANSORDER.TYPE = 'X' OR dbo.TRANSORDER.TYPE = 'V' RIGHT OUTER JOIN" & _
+                         "dbo.DOCTYPES ON dbo.TRANSORDER.TYPE = dbo.DOCTYPES.TYPE" & _
+"WHERE        (dbo.PARTPARAM.INVFLAG = 'Y') AND (dbo.ORDSTATUS.MANAGERREPOUT <> 'Y') AND (dbo.ORDERS.FORECASTFLAG <> 'S') AND " & _
+                         "(dbo.ORDERS.FORECASTFLAG <> 'F') AND (dbo.DOCTYPES.OTYPE <> 'P') AND (dbo.TRANSORDER.TYPE NOT IN ('F', 'I', 'J', 'K', 'P', 'W', 'Y', 'L')) AND " & _
+                         "(dbo.ORDERITEMS.ORD <> 0) AND (dbo.DOCUMENTS.TYPE <> 'A') AND (dbo.TRANSORDER.TQUANT <> 0) AND (dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE) "
+    '"BETWEEN DATEADD(day, - 7000, GETDATE()) AND GETDATE()) /* change dateadd back to -14 days */"
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -51,14 +52,9 @@ Partial Class _Default
         End Try
 
 
-        Dim d As Integer
-        Try
-            d = CInt(Request("d"))
-        Catch ex As Exception
-            d = 14
-        End Try
+        Dim d As Integer = If(CInt(Request("d")) > 0, CInt(Request("d")), 14)
 
-        Query &= "BETWEEN DATEADD(day, - " & d & ", GETDATE()) AND GETDATE()) "
+        query &= "BETWEEN DATEADD(day, - " & d & ", GETDATE()) AND GETDATE()) "
 
     End Sub
 
@@ -101,31 +97,30 @@ Partial Class _Default
         Else
             MultiView1.ActiveViewIndex += 1
         End If
-10:
-        Try
-            If Not IsNothing(Grid(vws(MultiView1.ActiveViewIndex))) Then
-                Grid(vws(MultiView1.ActiveViewIndex)).DataBind()
-                SetCaption(Grid(vws(MultiView1.ActiveViewIndex)))
-            End If
+        While retrycount < 10
+            Try
+                If Not IsNothing(Grid(vws(MultiView1.ActiveViewIndex))) Then
+                    Grid(vws(MultiView1.ActiveViewIndex)).DataBind()
+                    SetCaption(Grid(vws(MultiView1.ActiveViewIndex)))
+                End If
+                retrycount += 10
+            Catch ex As Exception
+                ' A DIVZERO error may be caused by there being no data in the table
+                ' whilst the data is refreshing
 
-        Catch ex As Exception
-            ' A DIVZERO error may be caused by there being no data in the table
-            ' whilst the data is refreshing
+                ' Wait for two seconds.
+                System.Threading.Thread.Sleep(2000)
 
-            ' Wait for two seconds.
-            System.Threading.Thread.Sleep(2000)
+                ' And then try again.            
+                If retrycount < 10 Then
+                    retrycount += 1
+                Else
+                    ' Return the error to the calling sub
+                    Throw ex
+                End If
 
-            ' And then try again.            
-            If retrycount < 10 Then
-                retrycount += 1
-                GoTo 10
-            Else
-                ' Return the error to the calling sub
-                Throw ex
-            End If
-
-        End Try
-
+            End Try
+        End While
     End Sub
 
     Private Function IncrementGrid(ByVal grid As GridView) As Boolean
