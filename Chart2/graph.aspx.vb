@@ -8,8 +8,22 @@ Partial Class _Default
     Private vws As List(Of View)
     Public query As String = ""
 
+#Region "Page Lifecycle/Event Handlers"
+
+    Protected Sub Page_PreInit(sender As Object, e As EventArgs) Handles Me.PreInit
+        Using sr As New System.IO.StreamReader(Server.MapPath("~/workingquery.sql"))
+            query = sr.ReadToEnd
+        End Using
+
+
+    End Sub
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim d As Integer = If(CInt(Request("d")) > 0, CInt(Request("d")), 14)
+
+        query &= "BETWEEN DATEADD(day, - " & d & ", GETDATE()) AND GETDATE()) "
+        SqlDataSource1.SelectCommand = query
         Try
             vws = Views()
             If MultiView1.ActiveViewIndex = -1 Then
@@ -30,11 +44,8 @@ Partial Class _Default
         End Try
 
 
-        Dim d As Integer = If(CInt(Request("d")) > 0, CInt(Request("d")), 14)
-
-        query &= "BETWEEN DATEADD(day, - " & d & ", GETDATE()) AND GETDATE()) "
-
     End Sub
+
 
     Protected Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
 
@@ -65,6 +76,11 @@ Partial Class _Default
             Response.Write(String.Format("{1}{0}{2}", "{br}", ex.Message, ex.StackTrace))
         End Try
     End Sub
+
+#End Region
+   
+
+  
 
     Private Sub IncrementView()
 
@@ -180,9 +196,5 @@ Partial Class _Default
     '    End Select
     'End Sub
 
-    Protected Sub Page_PreInit(sender As Object, e As EventArgs) Handles Me.PreInit
-        Using sr As New System.IO.StreamReader(Server.MapPath("~/workingquery.sql"))
-            query = sr.ReadToEnd
-        End Using
-    End Sub
+
 End Class

@@ -1,7 +1,7 @@
 SELECT        dbo.CUSTOMERS.CUSTDES AS Customer, dbo.ORDERS.ORDNAME AS [Order], dbo.fnFormatDate(dbo.MINTODATE(dbo.ORDERS.CURDATE), 'DD/MM/YY') AS Date, 
-                         dbo.PART.PARTNAME AS [Part Number], dbo.PART.PARTDES AS [Part Description], dbo.fnFormatDate(dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE), 'DD/MM/YY') 
-                         AS [Due Date], dbo.ORDERITEMS.TQUANT / 1000 AS [Ordered Qty], dbo.ORDERITEMS.TBALANCE / 1000 AS Balance, 
-                         dbo.TRANSORDER.TQUANT / 1000 AS [Transaction Quantity], 
+                         dbo.PART.PARTNAME AS [Part_Number], dbo.PART.PARTDES AS [Part_Description], dbo.fnFormatDate(dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE), 'DD/MM/YY') 
+                         AS [Due_Date], dbo.ORDERITEMS.TQUANT / 1000 AS [Ordered_Qty], dbo.ORDERITEMS.TBALANCE / 1000 AS Balance, 
+                         dbo.TRANSORDER.TQUANT / 1000 AS [Transaction_Quantity], 
                          CASE WHEN TRANSORDER.TYPE = 'X' THEN INVOICES.IVNUM WHEN TRANSORDER.TYPE = 'V' THEN INVOICES.IVNUM ELSE DOCUMENTS.DOCNO END AS Expr1, 
                          dbo.fnFormatDate(dbo.MINTODATE(dbo.TRANSORDER.CURDATE), 'DD/MM/YY') AS Expr2, 
                          CASE WHEN TRANSORDER.CURDATE = 0 THEN '' 
@@ -20,4 +20,4 @@ FROM            dbo.ORDERS INNER JOIN
 WHERE        (dbo.PARTPARAM.INVFLAG = 'Y') AND (dbo.ORDSTATUS.MANAGERREPOUT <> 'Y') AND (dbo.ORDERS.FORECASTFLAG <> 'S') AND 
                          (dbo.ORDERS.FORECASTFLAG <> 'F') AND (dbo.DOCTYPES.OTYPE <> 'P') AND (dbo.TRANSORDER.TYPE NOT IN ('F', 'I', 'J', 'K', 'P', 'W', 'Y', 'L')) AND 
                          (dbo.ORDERITEMS.ORD <> 0) AND (dbo.DOCUMENTS.TYPE <> 'A') AND (dbo.TRANSORDER.TQUANT <> 0) AND (dbo.MINTODATE(dbo.ORDERITEMS.DUEDATE) 
-                         BETWEEN DATEADD(day, - 7000, GETDATE()) AND GETDATE()) /* change dateadd back to -14 days */
+                         

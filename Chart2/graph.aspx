@@ -41,8 +41,7 @@
                         SortExpression="Expr2" />
                     <asp:BoundField DataField="Expr1" HeaderText="Inv/Doc Num." ReadOnly="True" 
                         SortExpression="Expr1" />
-                    <asp:BoundField DataField="Expr3" HeaderText="Some Date" ReadOnly="True" 
-                        SortExpression="Expr3" />
+                  
                 </Columns>
                 <FooterStyle BackColor="#FF3000" Font-Bold="True" ForeColor="White" />
                 <PagerStyle BackColor="#FF3000" ForeColor="White" HorizontalAlign="Center" />
@@ -54,7 +53,7 @@
             </asp:GridView>
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
                 ConnectionString="Data Source=PADDY\PRI;Initial Catalog=demo;User ID=tabula;Password=Tabula!" 
-                SelectCommand="<% =query %>" />
+                />
         </asp:View>
     </asp:MultiView>       
 </asp:Content>
